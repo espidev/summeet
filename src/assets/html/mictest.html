@@ -27,22 +27,21 @@
 		}
 	});
 
-	console.log("page loaded")
+	console.log("Page loaded")
 
 	const handleSuccess = function (stream) {
-		console.log("hi");
-		const options = {mimeType: 'audio/webm'};
+		const options = {mimeType: 'audio/webm;codecs=opus'};
 		const recordedChunks = [];
 		const mediaRecorder = new MediaRecorder(stream, options);
+		console.log("MR created");
 
 		mediaRecorder.addEventListener('dataavailable', function (e) {
-			console.log("wut");
+			console.log("Data Available from MR");
 			if (e.data.size > 0) {
 				recordedChunks.push(e.data);
 				console.log("push data to queue")
 			}
 
-			console.log("data-available")
 			if (shouldStop && running) {
 				console.log("should stop and stuff")
 				mediaRecorder.stop();
@@ -53,11 +52,12 @@
 		});
 
 		mediaRecorder.addEventListener('stop', function() {
-			console.log("sanity check");
+			console.log("Stop MR");
 			socket.send(new Blob(recordedChunks));
 		});
 
 		if (shouldStart && !running) {
+			console.log("Start MR");
 			mediaRecorder.start();
 			running = true;
 		}
