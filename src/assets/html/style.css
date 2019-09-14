@@ -7,6 +7,11 @@
     text-align: center;
 }
 
+body {
+    background-color: #FFFFFF;
+    text-color: black;
+}
+
 section {
     padding: 35px 0;
 }
@@ -50,6 +55,47 @@ section {
 
 .title-cus {
     margin-bottom: 20px;
+}
+
+.nfont {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 200;
+    color: black;
+}
+
+.titling {
+    letter-spacing: 2px;
+    font-size: 32px;
+}
+
+
+.gradient-45deg-light-blue-teal {
+    background: -webkit-linear-gradient(45deg, #4dd0e1 0%, #ffecb3 100%);
+    background: linear-gradient(45deg, #4dd0e1 0%, #ffecb3 100%);
+}
+.gradient-45deg-light-blue-teal.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(100, 255, 218, 0.5);
+}
+.gradient-45deg-reverse {
+    background: -webkit-linear-gradient(45deg, #26c6da 0%, #fffde7 170%);
+    background: linear-gradient(45deg, #26c6da 0%, #fffde7 170%);
+}
+.gradient-45deg-reverse.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(100, 255, 218, 0.5);
+}
+.gradient-45deg-green {
+    background: -webkit-linear-gradient(45deg, #00e676 0%, #1de9b6 170%);
+    background: linear-gradient(45deg, #00e676 0%, #1de9b6 170%);
+}
+.gradient-45deg-green.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(100, 255, 218, 0.5);
+}
+.gradient-45deg-red {
+    background: -webkit-linear-gradient(45deg, #e91e63 0%, #1de9b6 170%);
+    background: linear-gradient(45deg, #e91e63 0%, #1de9b6 170%);
+}
+.gradient-45deg-red.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(100, 255, 218, 0.5);
 }
 
 

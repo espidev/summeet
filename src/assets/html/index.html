@@ -207,7 +207,7 @@
                 <span>Name</span>
             </label>
         </div>
-        <button class="waves-effect waves-light btn-large pink" href="meetings.html" id="join" onclick="storeInfo()">Join Meeting</button>
+        <button class="waves-effect waves-light btn-large pink" href="session" id="join" onclick="storeInfo()">Join Meeting</button>
     </div>
 
 </body>
@@ -219,6 +219,7 @@
           var value = txtbox.value;
           document.cookie = "name=" + value;
           console.log(document.cookie);
+          window.location.replace("/session")
         }
     </script>
 

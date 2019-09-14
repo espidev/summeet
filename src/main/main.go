@@ -56,7 +56,7 @@ func main() {
 	})
 
 	router.GET("/session", func (c *gin.Context) {
-		c.HTML(http.StatusOK, "meetings.html", gin.H{})
+		c.HTML(http.StatusOK, "session.html", gin.H{})
 	})
 
 	router.GET("/live-chat", func (c *gin.Context) {

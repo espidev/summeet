@@ -7,13 +7,15 @@
         <link rel="stylesheet", type="text/css", href="style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
-        
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
+
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900&display=swap"
+              rel="stylesheet">
         
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        
+
     </head>
     
     
@@ -21,9 +23,13 @@
        
     </script>
     <body>
+    <div class="container">
         <section id="rolling-transcription">
            <div class="row">
-                <div class="col s5 push-s7 "><span class="flow-text">Meeting Agenda</span>
+                <div class="col s5 push-s7 ">
+
+                    <p class="center nfont titling">agenda <i class="material-icons" style="font-size: 36px; color: black;">dashboard</i></p>
+
                     <div class="row">
                         <form class="col s12">
                           <div class="row">
@@ -34,19 +40,60 @@
                           </div>
                         </form>
                       </div>
-                   
-               <span class="center-align flow-text">Meeting Summary</span>
+
+                    <p class="center nfont titling">summary <i class="material-icons" style="font-size: 36px; color: black;">track_changes</i></p>
                     <p class="text-summary" id="meeting-summary">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
                     </div>
-                <div class="col s7 pull-s5 rolling-trans"><span class="center-align flow-text title-cus">Meeting Transcription</span>
-                  <div class="meeting-cards" id="meeting-set">
+                <div class="col s7 pull-s5 rolling-trans">
+
+                    <p class="center nfont titling">chat <i class="material-icons" style="font-size: 36px; color: black;">chat</i></p>
+
+                    <div class="card gradient-shadow gradient-45deg-reverse">
+                        <div class="row nunito valign-wrapper">
+
+                            <div class="col s2">
+                                <img src="https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" class="circle responsive-img">
+                            </div>
+
+                            <div class="col s10">
+                                <div class="card-content white-text">
+                                    <span class="card-title nunito titling left"> dude</span>
+                                    <div class="row nunito valign-wrapper">
+
+                                        <span>
+                                            Yo I am amazing and stuff
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                  <div class="meeting-cards nfont" id="meeting-set">
 
                 </div>
                </div>
             </div> 
             
         </section>
-        
+
+    </div>
+
+    <div class="navbar-fixed" style="bottom:0; position:fixed;">
+        <nav>
+            <div class="nav-wrapper pink lighten-1">
+                <ul class="left hide-on-med-and-down">
+                    <li><a class="waves-effect waves-light"><i class="material-icons">skip_previous</i></a></li>
+                    <li><a class="waves-effect waves-light"><i class="material-icons">play_arrow</i></a></li>
+                    <li><a class="waves-effect waves-light"><i class="material-icons">skip_next</i></a></li>
+                    <li><a class="waves-effect waves-light"><i class="material-icons">volume_up</i></a></li>
+                    <li><a class="waves-effect waves-light"><i class="material-icons">shuffle</i></a></li>
+                    <li><a class="waves-effect waves-light"><i class="material-icons">repeat</i></a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
     </body>
     
     <script type="text/javascript">
