@@ -11,7 +11,7 @@
 	let shouldStart = false;
 	let running = false;
 	let btnRec = true;
-	let socket = new WebSocket("wss://localhost:3001/stream-audio");
+	let socket = new WebSocket("wss://devin:pass@localhost:3001/stream-audio");
 	let control = document.getElementById("control");
 
 	control.addEventListener('click', function () {
