@@ -363,7 +363,6 @@
       </div>
 
     </body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
     <script type="text/javascript">
 	var lMargin=15; //left margin in mm
@@ -382,6 +381,11 @@
                 doc.output("dataurlnewwindow");
                 doc.save(doc_name);
         }
+	    
+	    document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.modal');
+            var instances = M.Modal.init(elems);
+          });
 	    
 	    
         let socket = new WebSocket("ws://{{ .rootDomain }}/stream-audio");
