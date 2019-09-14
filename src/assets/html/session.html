@@ -1,367 +1,336 @@
 <!DOCTYPE html>
 <html lang="en"> <!--Presentation at 3:40-->
 
-    <head>
-        
-        
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
-        <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
-
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900&display=swap"
-              rel="stylesheet">
-        
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-                -webkit-box-sizing: border-box;
-                box-sizing: border-box;
-                line-height: normal;
-                text-align: center;
-            }
-
-            section {
-                padding: 35px 0;
-            }
-
-            .rolling-trans {
-                border-right: 1px solid #8e8e8e;
-            }
+	<head>
 
 
-            .meeting-agenda {
-                height: 200px;
-                background-color: #c9c8c8;
-                width: 550px;
-                display: block;
-                margin: 30px auto;
-                border-radius: 15px;
-                border-color: #c9c8c8;
-            }
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+		<link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
 
-            .text-summary {
-                text-align: left;
-                margin-top: 20px;
-                margin-right: 10px;
-                margin-left: 10px;
-            }
+		<link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900&display=swap"
+			  rel="stylesheet">
 
-            .custom-card {
-                margin-top: 30px;
-                padding: 0 20px;
-                overflow: auto;
-            }
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-            .custom-textarea {
-                height: 230px !important;
-            }
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-            .meeting-cards {
-                height: 500px;
-                overflow: auto;
-            }
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				-webkit-box-sizing: border-box;
+				box-sizing: border-box;
+				line-height: normal;
+				text-align: center;
+			}
+
+			section {
+				padding: 35px 0;
+			}
+
+			.rolling-trans {
+				border-right: 1px solid #8e8e8e;
+			}
 
 
+			.meeting-agenda {
+				height: 200px;
+				background-color: #c9c8c8;
+				width: 550px;
+				display: block;
+				margin: 30px auto;
+				border-radius: 15px;
+				border-color: #c9c8c8;
+			}
 
-            .title-cus {
-                margin-bottom: 20px;
-            }
+			.text-summary {
+				text-align: left;
+				margin-top: 20px;
+				margin-right: 10px;
+				margin-left: 10px;
+			}
 
-            .nfont {
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                color: black;
-            }
+			.custom-card {
+				margin-top: 30px;
+				padding: 0 20px;
+				overflow: auto;
+			}
 
-            .titling {
-                letter-spacing: 2px;
-                font-size: 32px;
-            }
+			.custom-textarea {
+				height: 230px !important;
+			}
 
+			.meeting-cards {
+				height: 500px;
+				overflow: auto;
+			}
 
-            .gradient-45deg-light-blue-teal {
-                background: -webkit-linear-gradient(45deg, #4dd0e1 0%, #ffecb3 100%);
-                background: linear-gradient(45deg, #4dd0e1 0%, #ffecb3 100%);
-            }
-            .gradient-45deg-light-blue-teal.gradient-shadow {
-                box-shadow: 0 6px 20px 0 rgba(100, 255, 218, 0.5);
-            }
-            .gradient-45deg-reverse {
-                background: -webkit-linear-gradient(45deg, #26c6da 0%, #fffde7 170%);
-                background: linear-gradient(45deg, #26c6da 0%, #fffde7 170%);
-            }
-            .gradient-45deg-reverse.gradient-shadow {
-                box-shadow: 0 6px 20px 0 rgba(100, 255, 218, 0.5);
-            }
-            .gradient-45deg-green {
-                background: -webkit-linear-gradient(45deg, #00e676 0%, #1de9b6 170%);
-                background: linear-gradient(45deg, #00e676 0%, #1de9b6 170%);
-            }
-            .gradient-45deg-green.gradient-shadow {
-                box-shadow: 0 6px 20px 0 rgba(100, 255, 218, 0.5);
-            }
-            .gradient-45deg-red {
-                background: -webkit-linear-gradient(45deg, #e91e63 0%, #1de9b6 170%);
-                background: linear-gradient(45deg, #e91e63 0%, #1de9b6 170%);
-            }
-            .gradient-45deg-red.gradient-shadow {
-                box-shadow: 0 6px 20px 0 rgba(100, 255, 218, 0.5);
-            }
+			.title-cus {
+				margin-bottom: 20px;
+			}
 
-            ::-webkit-scrollbar {
-                display: none;
-            }
-        </style>
+			.nfont {
+				font-family: 'Nunito', sans-serif;
+				font-size: larger;
+				color: black;
+			}
 
-    </head>
-    
-    
-    <script>
-       
-    </script>
-    <body>
-    <div class="container">
-        <section id="rolling-transcription">
-           <div class="row">
-                <div class="col s5 push-s7 ">
+			.titling {
+				letter-spacing: 2px;
+				font-size: 32px;
+			}
 
-                    <p class="center nfont titling">agenda <i class="material-icons" style="font-size: 36px; color: black;">dashboard</i></p>
+			.gradient-45deg-light-blue-teal {
+				background: -webkit-linear-gradient(45deg, #4dd0e1 0%, #ffecb3 100%);
+				background: linear-gradient(45deg, #4dd0e1 0%, #ffecb3 100%);
+			}
+			.gradient-45deg-light-blue-teal.gradient-shadow {
+				box-shadow: 0 6px 20px 0 rgba(100, 255, 218, 0.5);
+			}
+			.gradient-45deg-reverse {
+				background: -webkit-linear-gradient(45deg, #26c6da 0%, #fffde7 170%);
+				background: linear-gradient(45deg, #26c6da 0%, #fffde7 170%);
+			}
+			.gradient-45deg-reverse.gradient-shadow {
+				box-shadow: 0 6px 20px 0 rgba(100, 255, 218, 0.5);
+			}
+			.gradient-45deg-green {
+				background: -webkit-linear-gradient(45deg, #00e676 0%, #1de9b6 170%);
+				background: linear-gradient(45deg, #00e676 0%, #1de9b6 170%);
+			}
+			.gradient-45deg-green.gradient-shadow {
+				box-shadow: 0 6px 20px 0 rgba(100, 255, 218, 0.5);
+			}
+			.gradient-45deg-red {
+				background: -webkit-linear-gradient(45deg, #e91e63 0%, #1de9b6 170%);
+				background: linear-gradient(45deg, #e91e63 0%, #1de9b6 170%);
+			}
+			.gradient-45deg-red.gradient-shadow {
+				box-shadow: 0 6px 20px 0 rgba(100, 255, 218, 0.5);
+			}
 
-                    <div class="row">
-                        <form class="col s12">
-                          <div class="row">
-                            <div class="input-field col s12">
-                              <textarea id="textarea1" class="custom-textarea materialize-textarea"></textarea>
-                              <label for="textarea1">Textarea</label>
-                            </div>
-                          </div>
-                        </form>
-                      </div>
+			::-webkit-scrollbar {
+				display: none;
+			}
+		</style>
 
-                    <p class="center nfont titling">summary <i class="material-icons" style="font-size: 36px; color: black;">track_changes</i></p>
-                    <div class="text-summary nfont" id="meeting-summary">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div>
-                    </div>
-                <div class="col s7 pull-s5 rolling-trans" >
-
-                    <p class="center nfont titling">chat <i class="material-icons" style="font-size: 36px; color: black;">chat</i></p>
+	</head>
 
 
-{{/*                    <div class="card gradient-shadow gradient-45deg-reverse z-depth-1">*/}}
-{{/*                        <div class="row nunito valign-wrapper">*/}}
-{{/*                            <div class="col s1"></div>*/}}
-{{/*                            <div class="col s1">*/}}
-{{/*                                <img src="https://previews.123rf.com/images/punphoto/punphoto1211/punphoto121100083/16291629-colorful-abstract-water-color-art-hand-paint-background.jpg" class="circle responsive-img">*/}}
-{{/*                            </div>*/}}
+	<script>
 
-{{/*                            <div class="col s10">*/}}
-{{/*                                <div class="card-content white-text nunito" class="style=">*/}}
-{{/*                                        <b>Devin</b>*/}}
-{{/*                                        <br/>*/}}
-{{/*                                        Yo I am amazing and stuff*/}}
-{{/*                                </div>*/}}
-{{/*                            </div>*/}}
-{{/*                        </div>*/}}
-{{/*                    </div>*/}}
+	</script>
+	<body>
+	<div class="container">
+		<section id="rolling-transcription">
+		   <div class="row">
+				<div class="col s5 push-s7 ">
 
-                  <div class="meeting-cards nfont" id="meeting-set">
+					<p class="center nfont titling">agenda <i class="material-icons" style="font-size: 36px; color: black;">dashboard</i></p>
 
-                </div>
-               </div>
-            </div> 
-            
-        </section>
+					<div class="row">
+						<form class="col s12">
+						  <div class="row">
+							<div class="input-field col s12">
+							  <textarea id="textarea1" class="custom-textarea materialize-textarea"></textarea>
+							  <label for="textarea1"></label>
+							</div>
+						  </div>
+						</form>
+					  </div>
 
-    </div>
+					<p class="center nfont titling">summary <i class="material-icons" style="font-size: 36px; color: black;">track_changes</i></p>
+					<div class="text-summary nfont" id="meeting-summary"></div>
+					</div>
+				<div class="col s7 pull-s5 rolling-trans" >
 
-    <div class="navbar-fixed" style="bottom:0; position:fixed;">
-        <nav>
-            <div class="nav-wrapper grey ">
-                <ul class="left hide-on-med-and-down">
-                    <li><a class="waves-effect waves-light" id="mic-button" onclick="toggleMic()"><i class="material-icons">mic_off</i></a></li>
+					<p class="center nfont titling">chat <i class="material-icons" style="font-size: 36px; color: black;">chat</i></p>
 
-                </ul>
-            </div>
-        </nav>
-    </div>
+				  <div class="meeting-cards nfont" id="meeting-set">
+
+				</div>
+			   </div>
+			</div>
+
+		</section>
+
+	</div>
+
+	<div>
+		<a class="btn-floating btn-large waves-effect waves-light grey" style="bottom:10; position:fixed;" id="mic-button" onclick="toggleMic()"><i class="material-icons">mic_off</i></a>
+	</div>
 			
-    <!-- Modal Structure -->
-      <div id="modal1" class="modal">
-        <div class="modal-content">
-          <h4>Meeting Ended</h4>
-          <ul>
-              <li><a class="btn waves-effect waves-light custom-button"><span>Upload Meeting Notes To Google Drive</span><i class="material-icons right">insert_drive_file</i></a></li>
-              <script src="https://apis.google.com/js/platform.js" async defer></script>
-              <button onclick="createPDF()">
-                  <div class="g-savetodrive"
-                   data-src="//example.com/path/to/myfile.pdf"
-                   data-filename="Meeting.pdf"
-                   data-sitename="summeet.online">
-                </div>
-              </button>  
-              
-              <li><button class="btn waves-effect waves-light custom-button" onclick="createPDF()">Download Meeting Notes<i class="material-icons right">file_download</i></button></li>
+	<!-- Modal Structure -->
+	  <div id="modal1" class="modal">
+		<div class="modal-content">
+		  <h4>Meeting Ended</h4>
+		  <ul>
+			  <li><a class="btn waves-effect waves-light custom-button"><span>Upload Meeting Notes To Google Drive</span><i class="material-icons right">insert_drive_file</i></a></li>
+			  <script src="https://apis.google.com/js/platform.js" async defer></script>
+			  <button onclick="createPDF()">
+				  <div class="g-savetodrive"
+				   data-src="//example.com/path/to/myfile.pdf"
+				   data-filename="Meeting.pdf"
+				   data-sitename="summeet.online">
+				</div>
+			  </button>
 
-            </ul>
-        </div>
-        <div class="modal-footer">
-          <a href="index.html" class="modal-close waves-effect waves-green btn-flat">Close</a>
-        </div>
-      </div>
+			  <li><button class="btn waves-effect waves-light custom-button" onclick="createPDF()">Download Meeting Notes<i class="material-icons right">file_download</i></button></li>
 
-    </body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
-    <script type="text/javascript">
+			</ul>
+		</div>
+		<div class="modal-footer">
+		  <a href="index.html" class="modal-close waves-effect waves-green btn-flat">Close</a>
+		</div>
+	  </div>
+
+	</body>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
+	<script type="text/javascript">
 	var lMargin=15; //left margin in mm
-        var rMargin=15; //right margin in mm
-        var pdfInMM=210;  // width of A4 in mm
-        
-	    
-	    
-        function createPDF() {
-            var doc = new jsPDF("p","mm","a4");
-            var text = doc.splitTextToSize(document.getElementById('meeting-summary').textContent, (pdfInMM-lMargin-rMargin));
-            doc.setFont("helvetica");
-            
-            doc.text(text, 15, 15);
-            var doc_name = "meeting-summary.pdf";
-                doc.output("dataurlnewwindow");
-                doc.save(doc_name);
-        }
-	    
-	    document.addEventListener('DOMContentLoaded', function() {
-            var elems = document.querySelectorAll('.modal');
-            var instances = M.Modal.init(elems);
-          });
-	    
-	    
-        let socket = new WebSocket("ws://{{ .rootDomain }}/stream-audio");
-        socket.onopen = function () {
-            socket.send(document.cookie);
-        };
-        // this is great everything is great
+		var rMargin=15; //right margin in mm
+		var pdfInMM=210;  // width of A4 in mm
 
-        let bufferSize = 2048,
-            AudioContext,
-            context,
-            processor,
-            input,
-            globalStream;
+		function createPDF() {
+			var doc = new jsPDF("p","mm","a4");
+			var text = doc.splitTextToSize(document.getElementById('meeting-summary').textContent, (pdfInMM-lMargin-rMargin));
+			doc.setFont("helvetica");
 
-        let mic = false;
-        function toggleMic() {
-            if (mic) {
-                document.getElementById("mic-button").innerHTML = "<i class=\"material-icons\">mic_off</i>"
+			doc.text(text, 15, 15);
+			var doc_name = "meeting-summary.pdf";
+				doc.output("dataurlnewwindow");
+				doc.save(doc_name);
+		}
 
-                // stop recording
-                let track = globalStream.getTracks()[0];
-                track.stop();
+		document.addEventListener('DOMContentLoaded', function() {
+			var elems = document.querySelectorAll('.modal');
+			var instances = M.Modal.init(elems);
+		  });
 
-                input.disconnect(processor);
-                processor.disconnect(context.destination);
-                context.close().then(function () {
-                    input = null;
-                    processor = null;
-                    context = null;
-                    AudioContext = null;
-                });
+		let socket = new WebSocket("ws://{{ .rootDomain }}/stream-audio");
+		socket.onopen = function () {
+			socket.send(document.cookie);
+		};
+		// this is great everything is great
 
-            } else {
-                document.getElementById("mic-button").innerHTML = "<i class=\"material-icons\">mic</i>"
+		let bufferSize = 2048,
+			AudioContext,
+			context,
+			processor,
+			input,
+			globalStream;
 
-                // start recording
-                AudioContext = window.AudioContext || window.webkitAudioContext;
-                context = new AudioContext({
-                    latencyHint: 'interactive',
-                });
-                processor = context.createScriptProcessor(bufferSize, 1, 1);
-                processor.connect(context.destination);
-                context.resume();
+		let mic = false;
+		function toggleMic() {
+			if (mic) {
+				document.getElementById("mic-button").innerHTML = "<i class=\"material-icons\">mic_off</i>"
 
-                let handleSuccess = function (stream) {
-                    globalStream = stream;
-                    input = context.createMediaStreamSource(stream);
-                    input.connect(processor);
+				// stop recording
+				let track = globalStream.getTracks()[0];
+				track.stop();
 
-                    processor.onaudioprocess = function (e) {
-                        microphoneProcess(e);
-                    };
-                };
+				input.disconnect(processor);
+				processor.disconnect(context.destination);
+				context.close().then(function () {
+					input = null;
+					processor = null;
+					context = null;
+					AudioContext = null;
+				});
 
-                navigator.mediaDevices.getUserMedia({
-                    audio: true,
-                    video: false
-                })
-                    .then(handleSuccess);
+			} else {
+				document.getElementById("mic-button").innerHTML = "<i class=\"material-icons\">mic</i>"
 
-            }
-            mic = !mic;
-        }
+				// start recording
+				AudioContext = window.AudioContext || window.webkitAudioContext;
+				context = new AudioContext({
+					latencyHint: 'interactive',
+				});
+				processor = context.createScriptProcessor(bufferSize, 1, 1);
+				processor.connect(context.destination);
+				context.resume();
 
-        function microphoneProcess(e) {
-            let left = e.inputBuffer.getChannelData(0);
-            let left16 = downsampleBuffer(left, 44100, 16000);
-            socket.send(left16);
-        }
+				let handleSuccess = function (stream) {
+					globalStream = stream;
+					input = context.createMediaStreamSource(stream);
+					input.connect(processor);
 
-        let downsampleBuffer = function (buffer, sampleRate, outSampleRate) {
-            if (outSampleRate == sampleRate) {
-                return buffer;
-            }
-            if (outSampleRate > sampleRate) {
-                throw "downsampling rate show be smaller than original sample rate";
-            }
-            let sampleRateRatio = sampleRate / outSampleRate;
-            let newLength = Math.round(buffer.length / sampleRateRatio);
-            let result = new Int16Array(newLength);
-            let offsetResult = 0;
-            let offsetBuffer = 0;
-            while (offsetResult < result.length) {
-                let nextOffsetBuffer = Math.round((offsetResult + 1) * sampleRateRatio);
-                let accum = 0, count = 0;
-                for (let i = offsetBuffer; i < nextOffsetBuffer && i < buffer.length; i++) {
-                    accum += buffer[i];
-                    count++;
-                }
+					processor.onaudioprocess = function (e) {
+						microphoneProcess(e);
+					};
+				};
 
-                result[offsetResult] = Math.min(1, accum / count) * 0x7FFF;
-                offsetResult++;
-                offsetBuffer = nextOffsetBuffer;
-            }
-            return result.buffer;
-        };
+				navigator.mediaDevices.getUserMedia({
+					audio: true,
+					video: false
+				})
+					.then(handleSuccess);
 
-        // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			}
+			mic = !mic;
+		}
 
-        function httpGet(theUrl) {
-            var xmlHttp = new XMLHttpRequest();
-            xmlHttp.open("GET", theUrl, false); // false for synchronous request
-            xmlHttp.send(null);
-            return xmlHttp.responseText;
-        }
-        
-        var time = 0;
-        var time2 = 0;
-        var interval = setInterval(function() { 
-              time+=2;
-              //console.log(time);
-              document.getElementById("meeting-summary").innerHTML = httpGet('/live-summary')
-            
-        }, 500);
-        
-        var interval = setInterval(function() { 
-              time2+=2;
-              //console.log(time2);
-              document.getElementById("meeting-set").innerHTML = httpGet('/live-chat')
-            
-        }, 500);
-        
-        
-    </script>
+		function microphoneProcess(e) {
+			let left = e.inputBuffer.getChannelData(0);
+			let left16 = downsampleBuffer(left, 44100, 16000);
+			socket.send(left16);
+		}
+
+		let downsampleBuffer = function (buffer, sampleRate, outSampleRate) {
+			if (outSampleRate == sampleRate) {
+				return buffer;
+			}
+			if (outSampleRate > sampleRate) {
+				throw "downsampling rate show be smaller than original sample rate";
+			}
+			let sampleRateRatio = sampleRate / outSampleRate;
+			let newLength = Math.round(buffer.length / sampleRateRatio);
+			let result = new Int16Array(newLength);
+			let offsetResult = 0;
+			let offsetBuffer = 0;
+			while (offsetResult < result.length) {
+				let nextOffsetBuffer = Math.round((offsetResult + 1) * sampleRateRatio);
+				let accum = 0, count = 0;
+				for (let i = offsetBuffer; i < nextOffsetBuffer && i < buffer.length; i++) {
+					accum += buffer[i];
+					count++;
+				}
+
+				result[offsetResult] = Math.min(1, accum / count) * 0x7FFF;
+				offsetResult++;
+				offsetBuffer = nextOffsetBuffer;
+			}
+			return result.buffer;
+		};
+
+		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+		function httpGet(theUrl) {
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp.open("GET", theUrl, false); // false for synchronous request
+			xmlHttp.send(null);
+			return xmlHttp.responseText;
+		}
+
+		var time = 0;
+		var time2 = 0;
+		var interval = setInterval(function() {
+			  time+=2;
+			  //console.log(time);
+			  document.getElementById("meeting-summary").innerHTML = httpGet('/live-summary')
+
+		}, 500);
+
+		var interval = setInterval(function() {
+			  time2+=2;
+			  //console.log(time2);
+			  document.getElementById("meeting-set").innerHTML = httpGet('/live-chat')
+
+		}, 500);
+
+
+	</script>
 </html>
 
 
