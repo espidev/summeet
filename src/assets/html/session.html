@@ -192,14 +192,53 @@
     
     <script type="text/javascript">
 
+        let bufferSize = 2048,
+            AudioContext,
+            context,
+            processor,
+            input,
+            globalStream;
+
         let mic = false;
         function toggleMic() {
             if (mic) {
                 document.getElementById("mic-button").innerHTML = "<i class=\"material-icons\">mic_off</i>"
             } else {
                 document.getElementById("mic-button").innerHTML = "<i class=\"material-icons\">mic</i>"
+
+                // start recording
+                AudioContext = window.AudioContext || window.webkitAudioContext;
+                context = new AudioContext({
+                    latencyHint: 'interactive',
+                });
+                processor = context.createScriptProcessor(bufferSize, 1, 1);
+                processor.connect(context.destination);
+                context.resume();
+
+                let handleSuccess = function (stream) {
+                    globalStream = stream;
+                    input = context.createMediaStreamSource(stream);
+                    input.connect(processor);
+
+                    processor.onaudioprocess = function (e) {
+                        microphoneProcess(e);
+                    };
+                };
+
+                navigator.mediaDevices.getUserMedia({
+                    audio: true,
+                    video: false
+                })
+                    .then(handleSuccess);
+
             }
             mic = !mic;
+        }
+
+        function microphoneProcess(e) {
+            let left = e.inputBuffer.getChannelData(0);
+            let left16 = downsampleBuffer(left, 44100, 16000)
+            socket.emit('binaryData', left16);
         }
 
         function httpGet(theUrl) {
