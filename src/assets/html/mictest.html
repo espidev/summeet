@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Mic Test</title>
+</head>
+<body>
+<button id="control">Record</button>
+<script>
+	let shouldStop = false;
+	let shouldStart = false;
+	let running = false;
+	let btnRec = true;
+	let socket = new WebSocket("wss://localhost:3001/stream-audio");
+	const control = document.getElementById('control');
+
+	control.addEventListener('click', function () {
+		if (btnRec) {
+			shouldStop = true;
+			btnRec = false;
+			document.getElementById("control").value= "Stop";
+		}
+		else {
+			shouldStart = true;
+			btnRec = true;
+			document.getElementById("control").value= "Record";
+		}
+	});
+
+	const handleSuccess = function (stream) {
+		const options = {mimeType: 'audio/opus'};
+		const recordedChunks = [];
+		const mediaRecorder = new MediaRecorder(stream, options);
+
+		mediaRecorder.addEventListener('datavail', function (e) {
+			if (e.data.size > 0) {
+				recordedChunks.push(e.data);
+			}
+
+			if (shouldStop && running) {
+				mediaRecorder.stop();
+				socket.send(new Blob(recordedChunks));
+				running = false;
+			}
+		});
+
+		if (shouldStart && !running) {
+			mediaRecorder.start();
+			running = true;
+		}
+	};
+
+	navigator.mediaDevices.getUserMedia({audio: true, video: false})
+		.then(handleSuccess);
+
+</script>
+</body>
+</html>

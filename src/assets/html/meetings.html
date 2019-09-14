@@ -36,63 +36,11 @@
                       </div>
                    
                <span class="center-align flow-text">Meeting Summary</span>
-                    <p class="text-summary">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                    <p class="text-summary" id="meeting-summary">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
                     </div>
                 <div class="col s7 pull-s5 rolling-trans"><span class="center-align flow-text title-cus">Meeting Transcription</span>
-                  <div class="meeting-cards">
+                  <div class="meeting-cards" id="meeting-set">
 
-                   <div class="row custom-card">
-                      <div class="card blue-grey darken-1">
-                        <div class="card-content white-text">
-                          <span class="card-title">Card Title</span>
-                          <p>I am a very simple card. I am good at containing small bits of information.
-                          I am convenient because I require little markup to use effectively.</p>
-                        </div>
-                        <div class="card-action">
-                          <a href="#">This is a link</a>
-                          <a href="#">This is a link</a>
-                        </div>
-                    </div>
-                   </div>
-                   <div class="row custom-card">
-                      <div class="card blue-grey darken-1">
-                        <div class="card-content white-text">
-                          <span class="card-title">Card Title</span>
-                          <p>I am a very simple card. I am good at containing small bits of information.
-                          I am convenient because I require little markup to use effectively.</p>
-                        </div>
-                        <div class="card-action">
-                          <a href="#">This is a link</a>
-                          <a href="#">This is a link</a>
-                        </div>
-                    </div>
-                  </div>
-                      <div class="row custom-card">
-                      <div class="card blue-grey darken-1">
-                        <div class="card-content white-text">
-                          <span class="card-title">Card Title</span>
-                          <p>I am a very simple card. I am good at containing small bits of information.
-                          I am convenient because I require little markup to use effectively.</p>
-                        </div>
-                        <div class="card-action">
-                          <a href="#">This is a link</a>
-                          <a href="#">This is a link</a>
-                        </div>
-                    </div>
-                  </div>
-                      <div class="row custom-card">
-                      <div class="card blue-grey darken-1">
-                        <div class="card-content white-text">
-                          <span class="card-title">Card Title</span>
-                          <p>I am a very simple card. I am good at containing small bits of information.
-                          I am convenient because I require little markup to use effectively.</p>
-                        </div>
-                        <div class="card-action">
-                          <a href="#">This is a link</a>
-                          <a href="#">This is a link</a>
-                        </div>
-                    </div>
-                  </div>
                 </div>
                </div>
             </div> 
@@ -104,12 +52,26 @@
     <script type="text/javascript">
         function httpGet(theUrl) {
             var xmlHttp = new XMLHttpRequest();
-            xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
-            xmlHttp.send( null );
+            xmlHttp.open("GET", theUrl, false); // false for synchronous request
+            xmlHttp.send(null);
             return xmlHttp.responseText;
         }
         
+        var time = 0;
+        var time2 = 0;
+        var interval = setInterval(function() { 
+              time+=2;
+              console.log(time);
+              document.getElementById("meeting-summary").textContent = httpGet('/live-summary')
+            
+        }, 2000);
         
+        var interval = setInterval(function() { 
+              time2+=2;
+              console.log(time2);
+              document.getElementById("meeting-set").innerHTML = httpGet('/live-chat')
+            
+        }, 2000);
         
         
     </script>
