@@ -4,7 +4,6 @@
     <head>
         
         
-        <link rel="stylesheet", type="text/css", href="style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
         <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
@@ -192,6 +191,9 @@
     
     <script type="text/javascript">
 
+        let socket = new WebSocket("ws://localhost:3001/stream-audio");
+        // this is great everything is great
+
         let bufferSize = 2048,
             AudioContext,
             context,
@@ -203,6 +205,20 @@
         function toggleMic() {
             if (mic) {
                 document.getElementById("mic-button").innerHTML = "<i class=\"material-icons\">mic_off</i>"
+
+                // stop recording
+                let track = globalStream.getTracks()[0];
+                track.stop();
+
+                input.disconnect(processor);
+                processor.disconnect(context.destination);
+                context.close().then(function () {
+                    input = null;
+                    processor = null;
+                    context = null;
+                    AudioContext = null;
+                });
+
             } else {
                 document.getElementById("mic-button").innerHTML = "<i class=\"material-icons\">mic</i>"
 
@@ -237,9 +253,38 @@
 
         function microphoneProcess(e) {
             let left = e.inputBuffer.getChannelData(0);
-            let left16 = downsampleBuffer(left, 44100, 16000)
-            socket.emit('binaryData', left16);
+            let left16 = downsampleBuffer(left, 44100, 16000);
+            socket.send(left16);
         }
+
+        let downsampleBuffer = function (buffer, sampleRate, outSampleRate) {
+            if (outSampleRate == sampleRate) {
+                return buffer;
+            }
+            if (outSampleRate > sampleRate) {
+                throw "downsampling rate show be smaller than original sample rate";
+            }
+            let sampleRateRatio = sampleRate / outSampleRate;
+            let newLength = Math.round(buffer.length / sampleRateRatio);
+            let result = new Int16Array(newLength);
+            let offsetResult = 0;
+            let offsetBuffer = 0;
+            while (offsetResult < result.length) {
+                let nextOffsetBuffer = Math.round((offsetResult + 1) * sampleRateRatio);
+                let accum = 0, count = 0;
+                for (let i = offsetBuffer; i < nextOffsetBuffer && i < buffer.length; i++) {
+                    accum += buffer[i];
+                    count++;
+                }
+
+                result[offsetResult] = Math.min(1, accum / count) * 0x7FFF;
+                offsetResult++;
+                offsetBuffer = nextOffsetBuffer;
+            }
+            return result.buffer;
+        };
+
+        // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         function httpGet(theUrl) {
             var xmlHttp = new XMLHttpRequest();

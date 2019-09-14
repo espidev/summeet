@@ -11,7 +11,6 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"strconv"
 	"time"
 
 	speech "cloud.google.com/go/speech/apiv1"
@@ -98,6 +97,7 @@ func main() {
 
 }
 
+/*
 func speechToText(user string, b []byte) {
 	log.Println("Sending to google...") // TODO
 
@@ -191,7 +191,7 @@ func audioReceive(w http.ResponseWriter, hr *http.Request) {
 		go speechToText("dude", r)
 	}
 
-}
+}*/
 
 func newAudioReceive(w http.ResponseWriter, hr *http.Request) {
 	wsupgrader.CheckOrigin = func(r *http.Request) bool {return true}
@@ -250,7 +250,7 @@ func newAudioReceive(w http.ResponseWriter, hr *http.Request) {
 				return
 			}
 
-			log.Println("Sending to google...")
+			// log.Println("Sending to google...")
 
 			if err := stream.Send(&speechpb.StreamingRecognizeRequest{
 				StreamingRequest: &speechpb.StreamingRecognizeRequest_AudioContent{
@@ -259,7 +259,7 @@ func newAudioReceive(w http.ResponseWriter, hr *http.Request) {
 			}); err != nil {
 				log.Printf("Could not send audio: %v", err)
 			}
-			log.Println("Sent to google!")
+			// log.Println("Sent to google!")
 		}
 	}()
 
