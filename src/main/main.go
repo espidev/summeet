@@ -273,6 +273,7 @@ func newAudioReceive(w http.ResponseWriter, hr *http.Request) {
 				},
 			}); err != nil {
 				log.Printf("Could not send audio: %v", err)
+				return
 			}
 			// log.Println("Sent to google!")
 		}
@@ -342,6 +343,6 @@ func newAudioReceive(w http.ResponseWriter, hr *http.Request) {
 
 func updateVars() {
 	for {
-		
+
 	}
 }
