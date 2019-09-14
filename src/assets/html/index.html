@@ -8,6 +8,45 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toGMTString();
+            document.cookie = cname + "=" + cvalue + "; " + expires;
+        }
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i].trim();
+                if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+            }
+            return "";
+        }
+
+        function checkCookie() {
+            var user = getCookie("username");
+            if (user != "") {
+                window.location.href = "http://stackoverflow.com/questions/20766590/how-to-save-user-text-input-html-input-as-cookie"
+            } else {
+                if (user != "" && user != null) {
+                    setCookie("username", user, 30);
+                }
+            }
+        }
+
+        var trigger = document.getElementById("join");
+        trigger.addEventListener("click",
+            function() {
+                var input = document.getElementById("username");
+
+            }, false)
+        var x = document.cookie;
+        window.alert(x);
+
+    </script>
     <style>
         .pure-material-textfield-outlined {
             --pure-material-safari-helper1: rgb(var(--pure-material-primary-rgb, 33, 150, 243));
@@ -225,11 +264,11 @@
         </div>
         <div class="col s6">
             <label class="pure-material-textfield-outlined">
-                <input placeholder="Name">
+                <input placeholder="Name" id="username">
                 <span>Name</span>
             </label>
         </div>
-        <a class="waves-effect waves-light btn-large pink">Join Session</a>
+        <a class="waves-effect waves-light btn-large pink" href="meetings.html" id="join">Join Session</a>
     </div>
 
 </body>
