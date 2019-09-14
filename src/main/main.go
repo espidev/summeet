@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/base64"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"log"
@@ -9,6 +10,7 @@ import (
 	"github.com/gorilla/websocket"
 	"os"
 	"os/signal"
+	"strings"
 	"time"
 
 	speech "cloud.google.com/go/speech/apiv1"
@@ -19,13 +21,15 @@ var (
 	router *gin.Engine
 
 	// stuff
+	rawText string // no names attached
+	liveChatHtml string
+	liveSummaryHtml string
 )
 
 var wsupgrader = websocket.Upgrader {
 	ReadBufferSize:  1024,
 	WriteBufferSize: 1024,
 }
-
 
 const (
 	RootFolder = "."
@@ -55,8 +59,16 @@ func main() {
 
 	})
 
-	router.GET("/text", func (c *gin.Context) {
-		
+	router.GET("/live-chat", func (c *gin.Context) {
+		c.HTML(http.StatusOK, "livechat.html", gin.H {
+			"liveChat": liveChatHtml,
+		})
+	})
+
+	router.GET("/live-summary", func (c *gin.Context) {
+		c.HTML(http.StatusOK, "livesummary.html", gin.H {
+			"liveSummary": liveSummaryHtml,
+		})
 	})
 
 	router.GET("/stream-audio", func(c *gin.Context) {
@@ -89,7 +101,9 @@ func main() {
 
 }
 
-func speechToText(b []byte) {
+func speechToText(user string, b []byte) {
+	log.Println("Sending to google...") // TODO
+
 	ctx := context.Background()
 
 	client, err := speech.NewClient(ctx)
@@ -115,16 +129,29 @@ func speechToText(b []byte) {
 		return
 	}
 
+	log.Println("Received from google...")
+
+	var confidence float32
+	var transcript string
+
 	for _, result := range resp.Results {
 		for _, alt := range result.Alternatives {
+			if confidence < alt.Confidence {
+				confidence = alt.Confidence
+				transcript = alt.Transcript
+			}
 			fmt.Printf("\"%v\" (confidence=%3f)\n", alt.Transcript, alt.Confidence)
 		}
 	}
 
+	rawText += " " + transcript
+	liveSummaryHtml = getSummary(rawText)
 }
 
-func audioReceive(w http.ResponseWriter, r *http.Request) {
-	conn, err := wsupgrader.Upgrade(w, r, nil)
+// use http basic auth (username:password@localhost:3001)
+func audioReceive(w http.ResponseWriter, hr *http.Request) {
+	wsupgrader.CheckOrigin = func(r *http.Request) bool {return true}
+	conn, err := wsupgrader.Upgrade(w, hr, nil)
 	if err != nil {
 		fmt.Println("Failed to set websocket upgrade: %+v", err)
 		return
@@ -137,6 +164,26 @@ func audioReceive(w http.ResponseWriter, r *http.Request) {
 			log.Println(err)
 			return
 		}
-		go speechToText(r)
+
+		// get basic auth username
+		s := strings.SplitN(hr.Header.Get("Authorization"), " ", 2)
+		if len(s) != 2 {
+			http.Error(w, "Not authorized", 401)
+			return
+		}
+
+		b, err := base64.StdEncoding.DecodeString(s[1])
+		if err != nil {
+			http.Error(w, err.Error(), 401)
+			return
+		}
+
+		pair := strings.SplitN(string(b), ":", 2)
+		if len(pair) != 2 {
+			http.Error(w, "Not authorized", 401)
+			return
+		}
+
+		go speechToText(pair[0], r)
 	}
 }
