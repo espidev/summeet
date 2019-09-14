@@ -2,15 +2,14 @@ package main
 
 import (
 	"context"
-	"encoding/base64"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/gorilla/websocket"
 	"log"
 	"net/http"
-	"github.com/gorilla/websocket"
 	"os"
 	"os/signal"
-	"strings"
+	"strconv"
 	"time"
 
 	speech "cloud.google.com/go/speech/apiv1"
@@ -110,10 +109,11 @@ func speechToText(user string, b []byte) {
 
 	resp, err := client.Recognize(ctx, &speechpb.RecognizeRequest{
 		Config: &speechpb.RecognitionConfig{
-			Encoding:                            speechpb.RecognitionConfig_OGG_OPUS,
+			Encoding:                            speechpb.RecognitionConfig_LINEAR16,
 			SampleRateHertz:                     16000,
 			LanguageCode:                        "en-US",
 			EnableAutomaticPunctuation:          true,
+
 		},
 		Audio: &speechpb.RecognitionAudio {
 			AudioSource: &speechpb.RecognitionAudio_Content{Content: b},
@@ -125,7 +125,8 @@ func speechToText(user string, b []byte) {
 		return
 	}
 
-	log.Println("Received from google...")
+	log.Println(resp.String())
+	log.Println("Received from google! " + strconv.Itoa(len(resp.Results)))
 
 	var confidence float32
 	var transcript string
@@ -140,12 +141,34 @@ func speechToText(user string, b []byte) {
 		}
 	}
 
+	// append things
 	rawText += " " + transcript
+	liveChatHtml += `
+
+				<div class="card gradient-shadow gradient-45deg-reverse z-depth-1">
+                        <div class="row nunito valign-wrapper">
+                            <div class="col s1"></div>
+                            <div class="col s1">
+                                <img src="https://previews.123rf.com/images/punphoto/punphoto1211/punphoto121100083/16291629-colorful-abstract-water-color-art-hand-paint-background.jpg" class="circle responsive-img">
+                            </div>
+
+                            <div class="col s10">
+                                <div class="card-content white-text nunito" class="style=">
+                                        <b>` + user + `</b>
+                                        <br/>
+                                        ` + transcript + `
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+`
 	liveSummaryHtml = getSummary(rawText)
 }
 
 // use http basic auth (username:password@localhost:3001)
 func audioReceive(w http.ResponseWriter, hr *http.Request) {
+
 	wsupgrader.CheckOrigin = func(r *http.Request) bool {return true}
 	conn, err := wsupgrader.Upgrade(w, hr, nil)
 	if err != nil {
@@ -161,25 +184,8 @@ func audioReceive(w http.ResponseWriter, hr *http.Request) {
 		}
 		log.Println("Received audio!")
 
-		// get basic auth username
-		s := strings.SplitN(hr.Header.Get("Authorization"), " ", 2)
-		if len(s) != 2 {
-			http.Error(w, "Not authorized", 401)
-			return
-		}
+		//log.Printf(string(r))
 
-		b, err := base64.StdEncoding.DecodeString(s[1])
-		if err != nil {
-			http.Error(w, err.Error(), 401)
-			return
-		}
-
-		pair := strings.SplitN(string(b), ":", 2)
-		if len(pair) != 2 {
-			http.Error(w, "Not authorized", 401)
-			return
-		}
-
-		go speechToText(pair[0], r)
+		go speechToText("dude", r)
 	}
 }
