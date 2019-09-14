@@ -11,7 +11,7 @@
 	let shouldStart = false;
 	let running = false;
 	let btnRec = true;
-	let socket = new WebSocket("wss://devin:pass@localhost:3001/stream-audio");
+	let socket = new WebSocket("ws://devin:pas@localhost:3001/stream-audio");
 	let control = document.getElementById("control");
 
 	control.addEventListener('click', function () {
@@ -27,21 +27,34 @@
 		}
 	});
 
+	console.log("page loaded")
+
 	const handleSuccess = function (stream) {
+		console.log("hi");
 		const options = {mimeType: 'audio/webm'};
 		const recordedChunks = [];
 		const mediaRecorder = new MediaRecorder(stream, options);
 
-		mediaRecorder.addEventListener('datavail', function (e) {
+		mediaRecorder.addEventListener('dataavailable', function (e) {
+			console.log("wut");
 			if (e.data.size > 0) {
 				recordedChunks.push(e.data);
+				console.log("push data to queue")
 			}
 
+			console.log("data-available")
 			if (shouldStop && running) {
+				console.log("should stop and stuff")
 				mediaRecorder.stop();
+				console.log(recordedChunks);
 				socket.send(new Blob(recordedChunks));
 				running = false;
 			}
+		});
+
+		mediaRecorder.addEventListener('stop', function() {
+			console.log("sanity check");
+			socket.send(new Blob(recordedChunks));
 		});
 
 		if (shouldStart && !running) {

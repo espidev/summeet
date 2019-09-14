@@ -155,11 +155,11 @@ func audioReceive(w http.ResponseWriter, hr *http.Request) {
 
 	for {
 		_, r, err := conn.ReadMessage()
-		log.Println("Received audio!")
 		if err != nil {
-			log.Println(err)
+			log.Println("Error receiving audio: " + err.Error())
 			return
 		}
+		log.Println("Received audio!")
 
 		// get basic auth username
 		s := strings.SplitN(hr.Header.Get("Authorization"), " ", 2)
