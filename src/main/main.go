@@ -4,13 +4,15 @@ import (
 	"context"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"io"
 	"log"
 	"net/http"
 	"github.com/gorilla/websocket"
 	"os"
 	"os/signal"
 	"time"
+
+	speech "cloud.google.com/go/speech/apiv1"
+	speechpb "google.golang.org/genproto/googleapis/cloud/speech/v1"
 )
 
 var (
@@ -30,6 +32,8 @@ const (
 )
 
 func main() {
+	ctx := context.Background()
+
 	log.Println("Starting northhacking2...")
 
 	router = gin.Default()
@@ -51,6 +55,10 @@ func main() {
 
 	})
 
+	router.GET("/text", func (c *gin.Context) {
+		
+	})
+
 	router.GET("/stream-audio", func(c *gin.Context) {
 		audioReceive(c.Writer, c.Request)
 	})
@@ -70,7 +78,7 @@ func main() {
 	quit := make(chan os.Signal)
 	signal.Notify(quit, os.Interrupt)
 	<-quit
-	log.Println("Shutting down SHAD2019-Sulfur...")
+	log.Println("Shutting down northhacking...")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
@@ -82,6 +90,36 @@ func main() {
 }
 
 func speechToText(b []byte) {
+	ctx := context.Background()
+
+	client, err := speech.NewClient(ctx)
+	if err != nil {
+		log.Println("Failed to create google speech client: %v", err)
+		return
+	}
+
+	resp, err := client.Recognize(ctx, &speechpb.RecognizeRequest{
+		Config: &speechpb.RecognitionConfig{
+			Encoding:                            speechpb.RecognitionConfig_OGG_OPUS,
+			SampleRateHertz:                     16000,
+			LanguageCode:                        "en-US",
+			EnableAutomaticPunctuation:          true,
+		},
+		Audio: &speechpb.RecognitionAudio {
+			AudioSource: &speechpb.RecognitionAudio_Content{Content: b},
+		},
+	})
+
+	if err != nil {
+		log.Println("Failed to create google speech client: %v", err)
+		return
+	}
+
+	for _, result := range resp.Results {
+		for _, alt := range result.Alternatives {
+			fmt.Printf("\"%v\" (confidence=%3f)\n", alt.Transcript, alt.Confidence)
+		}
+	}
 
 }
 
