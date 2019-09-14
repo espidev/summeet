@@ -342,6 +342,6 @@ func newAudioReceive(w http.ResponseWriter, hr *http.Request) {
 
 func updateVars() {
 	for {
-
+		
 	}
 }

@@ -25,11 +25,6 @@
                 text-align: center;
             }
 
-            body {
-                background-color: #FFFFFF;
-                text-color: black;
-            }
-
             section {
                 padding: 35px 0;
             }
@@ -68,8 +63,10 @@
 
             .meeting-cards {
                 height: 500px;
-                overflow-y: auto;
+                overflow: auto;
             }
+
+
 
             .title-cus {
                 margin-bottom: 20px;
@@ -115,6 +112,10 @@
             .gradient-45deg-red.gradient-shadow {
                 box-shadow: 0 6px 20px 0 rgba(100, 255, 218, 0.5);
             }
+
+            ::-webkit-scrollbar {
+                display: none;
+            }
         </style>
 
     </head>
@@ -143,9 +144,9 @@
                       </div>
 
                     <p class="center nfont titling">summary <i class="material-icons" style="font-size: 36px; color: black;">track_changes</i></p>
-                    <p class="text-summary nfont" id="meeting-summary">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                    <div class="text-summary nfont" id="meeting-summary">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div>
                     </div>
-                <div class="col s7 pull-s5 rolling-trans" style="overflow-x: hidden; overflow-y: hidden;">
+                <div class="col s7 pull-s5 rolling-trans" >
 
                     <p class="center nfont titling">chat <i class="material-icons" style="font-size: 36px; color: black;">chat</i></p>
 
@@ -301,7 +302,7 @@
         var interval = setInterval(function() { 
               time+=2;
               //console.log(time);
-              document.getElementById("meeting-summary").textContent = httpGet('/live-summary')
+              document.getElementById("meeting-summary").innerHTML = httpGet('/live-summary')
             
         }, 500);
         
