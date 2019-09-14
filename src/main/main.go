@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"strings"
 	"time"
 
 	speech "cloud.google.com/go/speech/apiv1"
@@ -244,7 +245,7 @@ func newAudioReceive(w http.ResponseWriter, hr *http.Request) {
 		log.Println("Error receiving audio: " + err.Error())
 		return
 	}
-	user := string(sr)
+	user := strings.ReplaceAll(string(sr), "name=", "")
 	log.Println("Got user cookie: " + user)
 
 	go func() {
@@ -268,7 +269,7 @@ func newAudioReceive(w http.ResponseWriter, hr *http.Request) {
 
 			if err := stream.Send(&speechpb.StreamingRecognizeRequest{
 				StreamingRequest: &speechpb.StreamingRecognizeRequest_AudioContent{
-					AudioContent: buf[:], // TODO
+					AudioContent: buf,
 				},
 			}); err != nil {
 				log.Printf("Could not send audio: %v", err)

@@ -23,7 +23,7 @@ func getSummary (text string) string {
 	sentences := tokenizer.Tokenize(text)
 	maxN := 0.0
 	for _, s := range sentences {
-		str := s.Text
+		str := s.String()
 		str = strings.ReplaceAll(str, " and", "")
 		str = strings.ReplaceAll(str, " the", "")
 		str = strings.ReplaceAll(str, " a", "")
@@ -61,7 +61,7 @@ func getSummary (text string) string {
 
 	finalS := ""
 	for _, v := range lines {
-		finalS += v.s
+		finalS += v.s + "<\br>"
 	}
 
 	return finalS
