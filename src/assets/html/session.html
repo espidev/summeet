@@ -149,22 +149,22 @@
 
                     <p class="center nfont titling">chat <i class="material-icons" style="font-size: 36px; color: black;">chat</i></p>
 
-                    <div class="card gradient-shadow gradient-45deg-reverse z-depth-1">
-                        <div class="row nunito valign-wrapper">
-                            <div class="col s1"></div>
-                            <div class="col s1">
-                                <img src="https://previews.123rf.com/images/punphoto/punphoto1211/punphoto121100083/16291629-colorful-abstract-water-color-art-hand-paint-background.jpg" class="circle responsive-img">
-                            </div>
+{{/*                    <div class="card gradient-shadow gradient-45deg-reverse z-depth-1">*/}}
+{{/*                        <div class="row nunito valign-wrapper">*/}}
+{{/*                            <div class="col s1"></div>*/}}
+{{/*                            <div class="col s1">*/}}
+{{/*                                <img src="https://previews.123rf.com/images/punphoto/punphoto1211/punphoto121100083/16291629-colorful-abstract-water-color-art-hand-paint-background.jpg" class="circle responsive-img">*/}}
+{{/*                            </div>*/}}
 
-                            <div class="col s10">
-                                <div class="card-content white-text nunito" class="style=">
-                                        <b>Devin</b>
-                                        <br/>
-                                        Yo I am amazing and stuff
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+{{/*                            <div class="col s10">*/}}
+{{/*                                <div class="card-content white-text nunito" class="style=">*/}}
+{{/*                                        <b>Devin</b>*/}}
+{{/*                                        <br/>*/}}
+{{/*                                        Yo I am amazing and stuff*/}}
+{{/*                                </div>*/}}
+{{/*                            </div>*/}}
+{{/*                        </div>*/}}
+{{/*                    </div>*/}}
 
                   <div class="meeting-cards nfont" id="meeting-set">
 
@@ -300,14 +300,14 @@
         var time2 = 0;
         var interval = setInterval(function() { 
               time+=2;
-              console.log(time);
+              //console.log(time);
               document.getElementById("meeting-summary").textContent = httpGet('/live-summary')
             
         }, 2000);
         
         var interval = setInterval(function() { 
               time2+=2;
-              console.log(time2);
+              //console.log(time2);
               document.getElementById("meeting-set").innerHTML = httpGet('/live-chat')
             
         }, 2000);

@@ -238,6 +238,15 @@ func newAudioReceive(w http.ResponseWriter, hr *http.Request) {
 
 	log.Println("Done sending initial request.")
 
+	// get the name of the session
+	_, sr, err := conn.ReadMessage()
+	if err != nil {
+		log.Println("Error receiving audio: " + err.Error())
+		return
+	}
+	user := string(sr)
+	log.Println("Got user cookie: " + user)
+
 	go func() {
 		var buf []byte
 		for {
@@ -267,14 +276,6 @@ func newAudioReceive(w http.ResponseWriter, hr *http.Request) {
 			// log.Println("Sent to google!")
 		}
 	}()
-
-	// get the name of the session
-	_, sr, err := conn.ReadMessage()
-	if err != nil {
-		log.Println("Error receiving audio: " + err.Error())
-		return
-	}
-	user := string(sr)
 
 	// concurrently receive crap
 	for {
@@ -313,7 +314,7 @@ func newAudioReceive(w http.ResponseWriter, hr *http.Request) {
 
 
 		// append things
-		rawText += " " + transcript
+		rawText += " " + transcript + "."
 		liveChatHtml += `
 
 				<div class="card gradient-shadow gradient-45deg-reverse z-depth-1">
@@ -324,7 +325,7 @@ func newAudioReceive(w http.ResponseWriter, hr *http.Request) {
                             </div>
 
                             <div class="col s10">
-                                <div class="card-content white-text" class="style=">
+                                <div class="card-content white-text nfont" class="style=">
                                         <b>` + user + `</b>
                                         <br/>
                                         ` + transcript + `
