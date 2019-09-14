@@ -12,23 +12,23 @@
 	let running = false;
 	let btnRec = true;
 	let socket = new WebSocket("wss://localhost:3001/stream-audio");
-	const control = document.getElementById('control');
+	let control = document.getElementById("control");
 
 	control.addEventListener('click', function () {
 		if (btnRec) {
 			shouldStop = true;
 			btnRec = false;
-			document.getElementById("control").value= "Stop";
+			document.getElementById("control").innerHTML = "Stop";
 		}
 		else {
 			shouldStart = true;
 			btnRec = true;
-			document.getElementById("control").value= "Record";
+			document.getElementById("control").innerHTML = "Record";
 		}
 	});
 
 	const handleSuccess = function (stream) {
-		const options = {mimeType: 'audio/opus'};
+		const options = {mimeType: 'audio/webm'};
 		const recordedChunks = [];
 		const mediaRecorder = new MediaRecorder(stream, options);
 
