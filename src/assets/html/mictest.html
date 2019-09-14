@@ -7,8 +7,6 @@
 <body>
 <button id="control">Record</button>
 <script>
-	let shouldStop = false;
-	let shouldStart = false;
 	let running = false;
 	let btnRec = true;
 	let socket = new WebSocket("ws://devin:pas@localhost:3001/stream-audio");
@@ -16,15 +14,16 @@
 
 	control.addEventListener('click', function () {
 		if (btnRec) {
-			shouldStart = true;
-			shouldStop = false;
 			btnRec = false;
 			document.getElementById("control").innerHTML = "Stop";
+			console.log("Start MR");
+			mediaRecorder.start();
 		} else {
-			shouldStop = true;
-			shouldStart = false;
 			btnRec = true;
 			document.getElementById("control").innerHTML = "Record";
+			mediaRecorder.stop();
+			console.log(recordedChunks);
+			socket.send(new Blob(recordedChunks));
 		}
 	});
 
@@ -43,26 +42,12 @@
 				console.log("push data to queue")
 			}
 
-			if (shouldStop && running) {
-				console.log("should stop and stuff")
-				mediaRecorder.stop();
-				console.log(recordedChunks);
-				socket.send(new Blob(recordedChunks));
-				running = false;
-			}
 		});
 
-		mediaRecorder.addEventListener('stop', function() {
-			console.log("Stop MR");
-			socket.send(new Blob(recordedChunks));
-		});
-
-		console.log("shouldStart: " + shouldStart + " running: " + running);
-		if (shouldStart && !running) {
-			console.log("Start MR");
-			mediaRecorder.start();
-			running = true;
-		}
+		//mediaRecorder.addEventListener('stop', function() {
+		//	console.log("Stop MR");
+		//	socket.send(new Blob(recordedChunks));
+		//});
 	};
 
 	navigator.mediaDevices.getUserMedia({audio: true, video: false})
