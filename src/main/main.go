@@ -24,7 +24,10 @@ var (
 	rawText string // no names attached
 	liveChatHtml string
 	liveSummaryHtml string
+
 )
+
+var doUpdate = make(chan string)
 
 var wsupgrader = websocket.Upgrader {
 	ReadBufferSize:  1024,
@@ -56,15 +59,17 @@ func main() {
 	})
 
 	router.GET("/session", func (c *gin.Context) {
-		c.HTML(http.StatusOK, "session.html", gin.H{})
+		c.HTML(http.StatusOK, "session.html", gin.H{
+			"rootDomain": "localhost:3000",
+		})
 	})
 
 	router.GET("/live-chat", func (c *gin.Context) {
-		c.String(http.StatusOK, /*liveChatHtml*/ rawText)
+		c.String(http.StatusOK, liveChatHtml)
 	})
 
 	router.GET("/live-summary", func (c *gin.Context) {
-		c.String(http.StatusOK, /*liveSummaryHtml*/ rawText)
+		c.String(http.StatusOK, liveSummaryHtml)
 	})
 
 	router.GET("/stream-audio", func(c *gin.Context) {
@@ -72,7 +77,7 @@ func main() {
 	})
 
 	srv := &http.Server {
-		Addr: ":3001",
+		Addr: ":3000",
 		Handler: router,
 	}
 
@@ -263,6 +268,14 @@ func newAudioReceive(w http.ResponseWriter, hr *http.Request) {
 		}
 	}()
 
+	// get the name of the session
+	_, sr, err := conn.ReadMessage()
+	if err != nil {
+		log.Println("Error receiving audio: " + err.Error())
+		return
+	}
+	user := string(sr)
+
 	// concurrently receive crap
 	for {
 		log.Println("Received from google!")
@@ -278,7 +291,8 @@ func newAudioReceive(w http.ResponseWriter, hr *http.Request) {
 			if err.Code == 3 || err.Code == 11 {
 				log.Print("WARNING: Speech recognition request exceeded limit of 60 seconds.")
 			}
-			log.Fatalf("Could not recognize: %v", err)
+			log.Println("Could not recognize: %v", err)
+			return
 		}
 		for _, result := range resp.Results {
 			fmt.Printf("Result: %+v\n", result)
@@ -298,7 +312,6 @@ func newAudioReceive(w http.ResponseWriter, hr *http.Request) {
 		}
 
 
-		user := "devin" // TODO
 		// append things
 		rawText += " " + transcript
 		liveChatHtml += `
@@ -311,7 +324,7 @@ func newAudioReceive(w http.ResponseWriter, hr *http.Request) {
                             </div>
 
                             <div class="col s10">
-                                <div class="card-content white-text nunito" class="style=">
+                                <div class="card-content white-text" class="style=">
                                         <b>` + user + `</b>
                                         <br/>
                                         ` + transcript + `
@@ -322,5 +335,11 @@ func newAudioReceive(w http.ResponseWriter, hr *http.Request) {
 
 `
 		liveSummaryHtml = getSummary(rawText)
+	}
+}
+
+func updateVars() {
+	for {
+
 	}
 }

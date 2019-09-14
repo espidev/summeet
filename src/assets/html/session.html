@@ -191,7 +191,10 @@
     
     <script type="text/javascript">
 
-        let socket = new WebSocket("ws://localhost:3001/stream-audio");
+        let socket = new WebSocket("ws://{{ .rootDomain }}/stream-audio");
+        socket.onopen = function () {
+            //socket.send(document.cookie);
+        };
         // this is great everything is great
 
         let bufferSize = 2048,
