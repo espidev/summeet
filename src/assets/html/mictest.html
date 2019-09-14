@@ -16,12 +16,13 @@
 
 	control.addEventListener('click', function () {
 		if (btnRec) {
-			shouldStop = true;
+			shouldStart = true;
+			shouldStop = false;
 			btnRec = false;
 			document.getElementById("control").innerHTML = "Stop";
-		}
-		else {
-			shouldStart = true;
+		} else {
+			shouldStop = true;
+			shouldStart = false;
 			btnRec = true;
 			document.getElementById("control").innerHTML = "Record";
 		}
@@ -56,6 +57,7 @@
 			socket.send(new Blob(recordedChunks));
 		});
 
+		console.log("shouldStart: " + shouldStart + " running: " + running);
 		if (shouldStart && !running) {
 			console.log("Start MR");
 			mediaRecorder.start();
