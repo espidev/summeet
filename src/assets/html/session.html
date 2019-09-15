@@ -191,7 +191,7 @@
 			  //console.log(time3);
 			  document.getElementById("time_clock").textContent = httpGet('/time')
 
-		}, 250);
+		}, 1000);
 		var lMargin=15; //left margin in mm
 		var rMargin=15; //right margin in mm
 		var pdfInMM=210;  // width of A4 in mm
@@ -309,13 +309,13 @@
 			  time+=2;
 			  //console.log(time);
 			  document.getElementById("meeting-summary").innerHTML = httpGet('/live-summary')
-		}, 500);
+		}, 1000);
 		var interval = setInterval(function() {
 			  time2+=2;
 			  //console.log(time2);
 			  document.getElementById("meeting-set").innerHTML = httpGet('/live-chat')
 			let elem = document.getElementById('meeting-set');
 			elem.scrollTop = elem.scrollHeight;
-		}, 500);
+		}, 1000);
 	</script>
 </html>
