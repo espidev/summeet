@@ -41,6 +41,7 @@ const (
 
 func main() {
 	ctx := context.Background()
+	start := time.Now()
 
 	log.Println("Starting northhacking2...")
 
@@ -75,6 +76,10 @@ func main() {
 
 	router.GET("/stream-audio", func(c *gin.Context) {
 		newAudioReceive(c.Writer, c.Request)
+	})
+
+	router.GET("/time", func(c *gin.Context) {
+		c.String(http.StatusOK, fmt.Sprintf("%s", time.Since(start)))
 	})
 
 	srv := &http.Server {

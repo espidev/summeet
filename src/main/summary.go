@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"gopkg.in/neurosnap/sentences.v1/english"
+	"log"
 	"sort"
 	"strings"
 )
@@ -41,6 +43,7 @@ func getSummary (text string) string {
 
 	for k, v := range m {
 		m[k] = v/maxN
+		log.Println(k + " " + fmt.Sprintf("%f", m[k]))
 	}
 
 	var lines []sentenceEntry
