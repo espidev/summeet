@@ -29,7 +29,13 @@ var (
 
 )
 
-var doUpdate = make(chan string)
+type Rec struct {
+	User string
+	Image string
+	Transcript string
+}
+
+var doUpdate = make(chan Rec)
 
 var wsupgrader = websocket.Upgrader {
 	ReadBufferSize:  1024,
@@ -49,6 +55,8 @@ func main() {
 	router = gin.Default()
 
 	// setup routes
+
+	go updateVars()
 
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
@@ -341,31 +349,37 @@ func newAudioReceive(w http.ResponseWriter, hr *http.Request) {
 		}
 
 		// append things
-		rawText += " " + transcript + "."
+		doUpdate <- Rec{
+			User:       user,
+			Image:      image,
+			Transcript: transcript,
+		}
+	}
+}
+
+func updateVars() {
+	for {
+		dataRec := <-doUpdate
+
+		rawText += " " + dataRec.Transcript + "."
 		liveChatHtml += `
 				<div class="card gradient-shadow gradient-45deg-reverse z-depth-1">
                         <div class="row nunito valign-wrapper">
                             <div class="col s1"></div>
                             <div class="col s1">
-                                <img src="` + image + `" class="circle responsive-img">
+                                <img src="` + dataRec.Image + `" class="circle responsive-img">
                             </div>
 
                             <div class="col s10">
                                 <div class="card-content white-text nfont" class="style=">
-                                        <b>` + user + `</b>
+                                        <b>` + dataRec.User + `</b>
                                         <br/>
-                                        ` + transcript + `
+                                        ` + dataRec.Transcript + `
                                 </div>
                             </div>
                         </div>
                     </div>
 		`
 		liveSummaryHtml = getSummary(rawText)
-	}
-}
-
-func updateVars() {
-	for {
-
 	}
 }
