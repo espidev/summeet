@@ -161,6 +161,7 @@
 					<li><span style="position:fixed; margin-top: 12px; margin-left: 920px; padding: 0 0 20px 20px; color:white; font-size: 30px; font-weight: 100;" class="nfont" id="time_clock"><b>0:00</b></span></li>
 				</ul>
 				<ul class="right hide-on-med-and-down">
+					<li><a class="waves-effect waves-light" id="pinButton" onclick="toggleAutoScroll()"><i class="material-icons">panorama_fish_eye</i></a></li>
 					<li><a class="waves-effect waves-light modal-trigger" href="#modal1"><i class="material-icons">close</i></a></li>
 				</ul>
 			</div>
@@ -185,6 +186,16 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
 	<script type="text/javascript">
+		let autoScroll = true;
+		function toggleAutoScroll() {
+			if (autoScroll) {
+				document.getElementById("pinButton").innerHTML = "<i class=\"material-icons\">brightness_1</i>"
+			} else {
+				document.getElementById("pinButton").innerHTML = "<i class=\"material-icons\">panorama_fish_eye</i>"
+			}
+			autoScroll = !autoScroll;
+		}
+
         var time3 = 0;
         var interval = setInterval(function() {
 			  time3+=2;
@@ -309,13 +320,15 @@
 			  time+=2;
 			  //console.log(time);
 			  document.getElementById("meeting-summary").innerHTML = httpGet('/live-summary')
-		}, 500);
+		}, 1000);
 		var interval = setInterval(function() {
-			  time2+=2;
-			  //console.log(time2);
-			  document.getElementById("meeting-set").innerHTML = httpGet('/live-chat')
-			let elem = document.getElementById('meeting-set');
-			elem.scrollTop = elem.scrollHeight;
-		}, 500);
+			if (autoScroll) {
+				time2 += 2;
+				//console.log(time2);
+				document.getElementById("meeting-set").innerHTML = httpGet('/live-chat')
+				let elem = document.getElementById('meeting-set');
+				elem.scrollTop = elem.scrollHeight;
+			}
+		}, 1000);
 	</script>
 </html>

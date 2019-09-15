@@ -1,2 +1,3 @@
-# northhacking2
-we are not
+# summeet (HackTheNorth 2019)
+
+https://devpost.com/software/summeet
