@@ -220,7 +220,7 @@
 			document.getElementById("mic-button").classList.remove("pulse")
 		}
 		// this is great everything is great
-		let bufferSize = 2048,
+		let bufferSize = 4096,
 			AudioContext,
 			context,
 			processor,
@@ -229,7 +229,7 @@
 		let mic = false;
 		function toggleMic() {
 			if (mic) {
-				document.getElementById("mic-button").innerHTML = "<i style=\"padding: 15px 0;font-size:36px;\" class=\"material-icons\">mic_off</i>"
+				document.getElementById("mic-button").innerHTML = "<i style=\"padding: 15px 0;font-size:36px;\" class=\"material-icons\">mic_off</i>";
 				// stop recording
 				let track = globalStream.getTracks()[0];
 				track.stop();
