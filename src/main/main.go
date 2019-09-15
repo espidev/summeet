@@ -55,10 +55,7 @@ func main() {
 	router.LoadHTMLGlob(RootFolder + "/src/assets/html/*")
 	router.Static("/images", RootFolder+ "/assets/images")
 	router.GET("/", func (c *gin.Context) {
-		c.HTML(http.StatusOK, "index.html", gin.H{
-			//"flowTotal": totalVol,
-			//"flowRate": flowVol,
-		})
+		c.HTML(http.StatusOK, "index.html", gin.H{})
 	})
 
 	router.GET("/session", func (c *gin.Context) {
@@ -83,7 +80,14 @@ func main() {
 		seconds := int(time.Since(start).Seconds())
 		minutes := int(seconds / 60)
 		seconds = int(seconds % 60)
-		c.String(http.StatusOK, strconv.Itoa(minutes) + ":" + strconv.Itoa(seconds))
+
+		var sec string
+		if seconds < 10 {
+			sec = "0" + strconv.Itoa(seconds)
+		} else {
+			sec = strconv.Itoa(seconds)
+		}
+		c.String(http.StatusOK, strconv.Itoa(minutes) + ":" + sec)
 	})
 
 	srv := &http.Server {
@@ -324,6 +328,8 @@ func newAudioReceive(w http.ResponseWriter, hr *http.Request) {
 		}
 
 
+		image := "https://previews.123rf.com/images/punphoto/punphoto1211/punphoto121100083/16291629-colorful-abstract-water-color-art-hand-paint-background.jpg"
+
 		// append things
 		rawText += " " + transcript + "."
 		liveChatHtml += `
@@ -332,7 +338,7 @@ func newAudioReceive(w http.ResponseWriter, hr *http.Request) {
                         <div class="row nunito valign-wrapper">
                             <div class="col s1"></div>
                             <div class="col s1">
-                                <img src="https://previews.123rf.com/images/punphoto/punphoto1211/punphoto121100083/16291629-colorful-abstract-water-color-art-hand-paint-background.jpg" class="circle responsive-img">
+                                <img src="` + image + `" class="circle responsive-img">
                             </div>
 
                             <div class="col s10">
