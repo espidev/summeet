@@ -61,7 +61,7 @@ func getSummary (text string) string {
 
 	finalS := ""
 	for _, v := range lines {
-		finalS += v.s + "<br/>"
+		finalS += v.s + "\n"
 	}
 
 	return finalS

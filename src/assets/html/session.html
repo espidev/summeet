@@ -2,8 +2,6 @@
 <html lang="en"> <!--Presentation at 3:40-->
 
 	<head>
-
-
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
 		<link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
@@ -103,8 +101,8 @@
 				box-shadow: 0 6px 20px 0 rgba(100, 255, 218, 0.5);
 			}
 			.gradient-45deg-red {
-				background: -webkit-linear-gradient(45deg, #e91e63 0%, #1de9b6 170%);
-				background: linear-gradient(45deg, #e91e63 0%, #1de9b6 170%);
+				background: -webkit-linear-gradient(45deg, #e91e63 0%, #4dd0e1 150%);
+				background: linear-gradient(45deg, #e91e63 0%, #4dd0e1 150%);
 			}
 			.gradient-45deg-red.gradient-shadow {
 				box-shadow: 0 6px 20px 0 rgba(100, 255, 218, 0.5);
@@ -112,6 +110,10 @@
 
 			::-webkit-scrollbar {
 				display: none;
+			}
+			.container {
+				margin-top: 50px;
+				margin-bottom: 100px;
 			}
 		</style>
 
@@ -127,7 +129,7 @@
 		   <div class="row">
 				<div class="col s5 push-s7 ">
 
-					<p class="center nfont titling">agenda <i class="material-icons" style="font-size: 36px; color: black;">dashboard</i></p>
+					<p class="center nfont titling"><b>agenda</b> <i class="material-icons" style="font-size: 36px; color: black;">dashboard</i></p>
 
 					<div class="row">
 						<form class="col s12">
@@ -140,16 +142,22 @@
 						</form>
 					  </div>
 
-					<p class="center nfont titling">summary <i class="material-icons" style="font-size: 36px; color: black;">track_changes</i></p>
-					<div class="text-summary nfont" id="meeting-summary"></div>
+					<p class="center nfont titling"><b>summary</b> <i class="material-icons" style="font-size: 36px; color: black;">track_changes</i></p>
+
+					<textarea class="text-summary nfont" id="meeting-summary" style="height:300px; border: none;" ></textarea>
 					</div>
 				<div class="col s7 pull-s5 rolling-trans" >
 
-					<p class="center nfont titling">chat <i class="material-icons" style="font-size: 36px; color: black;">chat</i></p>
+					<p class="center nfont titling"><b>chat</b> <i class="material-icons" style="font-size: 36px; color: black;">chat</i></p>
 
 				  <div class="meeting-cards nfont" id="meeting-set">
-
 				</div>
+
+
+					<div>
+						<a class="btn-floating btn-large waves-effect waves-light grey" style="position:fixed;width:80px;height:80px;margin-top:100px;margin-right:20px;" id="mic-button" onclick="toggleMic()" onmouseleave="unpulseButton()" onmouseenter="pulseButton()"><i style="padding: 15px 0;font-size:36px;" class="material-icons">mic_off</i></a>
+					</div>
+
 			   </div>
 			</div>
 
@@ -157,61 +165,68 @@
 
 	</div>
 
-	<div>
-		<a class="btn-floating btn-large waves-effect waves-light grey" style="bottom:10; position:fixed;" id="mic-button" onclick="toggleMic()"><i class="material-icons">mic_off</i></a>
+
+
+	<div class="navbar-fixed" style="bottom:0; position:fixed;">
+		<nav>
+			<div class="nav-wrapper gradient-45deg-red gradient-shadow">
+				<ul class="left hide-on-med-and-down">
+					<li><span style="position:fixed;margin-top: 10px;padding: 0 0 20px 20px;color:white; font-size: 32px;" class="nfont"><b>summeet</b></span></li>
+				</ul>
+				<ul class="right hide-on-med-and-down">
+					<li><a class="waves-effect waves-light modal-trigger" href="#modal1"><i class="material-icons">close</i></a></li>
+				</ul>
+			</div>
+		</nav>
 	</div>
-			
+
 	<!-- Modal Structure -->
-	  <div id="modal1" class="modal">
+	<div id="modal1" class="modal">
 		<div class="modal-content">
-		  <h4>Meeting Ended</h4>
-		  <ul>
-			  <li><a class="btn waves-effect waves-light custom-button"><span>Upload Meeting Notes To Google Drive</span><i class="material-icons right">insert_drive_file</i></a></li>
-			  <script src="https://apis.google.com/js/platform.js" async defer></script>
-			  <button onclick="createPDF()">
-				  <div class="g-savetodrive"
-				   data-src="//example.com/path/to/myfile.pdf"
-				   data-filename="Meeting.pdf"
-				   data-sitename="summeet.online">
-				</div>
-			  </button>
-
-			  <li><button class="btn waves-effect waves-light custom-button" onclick="createPDF()">Download Meeting Notes<i class="material-icons right">file_download</i></button></li>
-
+			<h4 class="nfont">End meeting?</h4>
+			<ul>
+				<li><button class="btn-large waves-effect waves-light custom-button pink" onclick=createPDF()>Download Meeting Notes<i class="material-icons right">file_download</i></button></li>
 			</ul>
 		</div>
 		<div class="modal-footer">
-		  <a href="index.html" class="modal-close waves-effect waves-green btn-flat">Close</a>
+			<a href="/" class="modal-close waves-effect waves-green btn-flat pulse">Confirm</a>
 		</div>
-	  </div>
+	</div>
 
 	</body>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
 	<script type="text/javascript">
-	var lMargin=15; //left margin in mm
+		var lMargin=15; //left margin in mm
 		var rMargin=15; //right margin in mm
 		var pdfInMM=210;  // width of A4 in mm
 
 		function createPDF() {
-			var doc = new jsPDF("p","mm","a4");
+			var doc = new jsPDF('p','mm','a4');
 			var text = doc.splitTextToSize(document.getElementById('meeting-summary').textContent, (pdfInMM-lMargin-rMargin));
 			doc.setFont("helvetica");
-
 			doc.text(text, 15, 15);
 			var doc_name = "meeting-summary.pdf";
-				doc.output("dataurlnewwindow");
-				doc.save(doc_name);
+			doc.save(doc_name);
 		}
-
 		document.addEventListener('DOMContentLoaded', function() {
 			var elems = document.querySelectorAll('.modal');
 			var instances = M.Modal.init(elems);
-		  });
+		});
 
 		let socket = new WebSocket("ws://{{ .rootDomain }}/stream-audio");
 		socket.onopen = function () {
 			socket.send(document.cookie);
 		};
+
+		function pulseButton() {
+			document.getElementById("mic-button").classList.add("pulse")
+		}
+		function unpulseButton() {
+			document.getElementById("mic-button").classList.remove("pulse")
+		}
+
 		// this is great everything is great
 
 		let bufferSize = 2048,
@@ -224,7 +239,7 @@
 		let mic = false;
 		function toggleMic() {
 			if (mic) {
-				document.getElementById("mic-button").innerHTML = "<i class=\"material-icons\">mic_off</i>"
+				document.getElementById("mic-button").innerHTML = "<i style=\"padding: 15px 0;font-size:36px;\" class=\"material-icons\">mic_off</i>"
 
 				// stop recording
 				let track = globalStream.getTracks()[0];
@@ -240,7 +255,7 @@
 				});
 
 			} else {
-				document.getElementById("mic-button").innerHTML = "<i class=\"material-icons\">mic</i>"
+				document.getElementById("mic-button").innerHTML = "<i style=\"padding: 15px 0;font-size:36px;\" class=\"material-icons\">mic</i>"
 
 				// start recording
 				AudioContext = window.AudioContext || window.webkitAudioContext;
