@@ -6,7 +6,7 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
 		<link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
 
-		<link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900&display=swap"
+		<link href="https://fonts.googleapis.com/css?family=Nunito:100, 200,300,400,600,700,800,900&display=swap"
 			  rel="stylesheet">
 
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -22,16 +22,12 @@
 				line-height: normal;
 				text-align: center;
 			}
-
 			section {
 				padding: 35px 0;
 			}
-
 			.rolling-trans {
 				border-right: 1px solid #8e8e8e;
 			}
-
-
 			.meeting-agenda {
 				height: 200px;
 				background-color: #c9c8c8;
@@ -41,44 +37,36 @@
 				border-radius: 15px;
 				border-color: #c9c8c8;
 			}
-
 			.text-summary {
 				text-align: left;
 				margin-top: 20px;
 				margin-right: 10px;
 				margin-left: 10px;
 			}
-
 			.custom-card {
 				margin-top: 30px;
 				padding: 0 20px;
 				overflow: auto;
 			}
-
 			.custom-textarea {
 				height: 230px !important;
 			}
-
 			.meeting-cards {
 				height: 500px;
 				overflow: auto;
 			}
-
 			.title-cus {
 				margin-bottom: 20px;
 			}
-
 			.nfont {
 				font-family: 'Nunito', sans-serif;
 				font-size: larger;
 				color: black;
 			}
-
 			.titling {
 				letter-spacing: 2px;
 				font-size: 32px;
 			}
-
 			.gradient-45deg-light-blue-teal {
 				background: -webkit-linear-gradient(45deg, #4dd0e1 0%, #ffecb3 100%);
 				background: linear-gradient(45deg, #4dd0e1 0%, #ffecb3 100%);
@@ -107,7 +95,6 @@
 			.gradient-45deg-red.gradient-shadow {
 				box-shadow: 0 6px 20px 0 rgba(100, 255, 218, 0.5);
 			}
-
 			::-webkit-scrollbar {
 				display: none;
 			}
@@ -121,7 +108,6 @@
 
 
 	<script>
-
 	</script>
 	<body>
 	<div class="container">
@@ -173,6 +159,9 @@
 				<ul class="left hide-on-med-and-down">
 					<li><span style="position:fixed;margin-top: 10px;padding: 0 0 20px 20px;color:white; font-size: 32px;" class="nfont"><b>summeet</b></span></li>
 				</ul>
+                <ul class="center hide-on-med-and-down">
+					<li><span style="position:fixed; margin-top: 10px; margin-left: 665px; padding: 0 0 20px 20px; color:white; font-size: 32px; font-weight: 100;" class="nfont" id="time_clock"><b>0:00</b></span></li>
+				</ul>
 				<ul class="right hide-on-med-and-down">
 					<li><a class="waves-effect waves-light modal-trigger" href="#modal1"><i class="material-icons">close</i></a></li>
 				</ul>
@@ -198,10 +187,16 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
 	<script type="text/javascript">
+        var time3 = 0;
+        var interval = setInterval(function() {
+			  time3+=2;
+			  //console.log(time3);
+			  document.getElementById("time_clock").textContent = httpGet('/time')
+
+		}, 250);
 		var lMargin=15; //left margin in mm
 		var rMargin=15; //right margin in mm
 		var pdfInMM=210;  // width of A4 in mm
-
 		function createPDF() {
 			var doc = new jsPDF('p','mm','a4');
 			var text = doc.splitTextToSize(document.getElementById('meeting-summary').textContent, (pdfInMM-lMargin-rMargin));
@@ -214,37 +209,30 @@
 			var elems = document.querySelectorAll('.modal');
 			var instances = M.Modal.init(elems);
 		});
-
 		let socket = new WebSocket("ws://{{ .rootDomain }}/stream-audio");
 		socket.onopen = function () {
 			socket.send(document.cookie);
 		};
-
 		function pulseButton() {
 			document.getElementById("mic-button").classList.add("pulse")
 		}
 		function unpulseButton() {
 			document.getElementById("mic-button").classList.remove("pulse")
 		}
-
 		// this is great everything is great
-
 		let bufferSize = 2048,
 			AudioContext,
 			context,
 			processor,
 			input,
 			globalStream;
-
 		let mic = false;
 		function toggleMic() {
 			if (mic) {
 				document.getElementById("mic-button").innerHTML = "<i style=\"padding: 15px 0;font-size:36px;\" class=\"material-icons\">mic_off</i>"
-
 				// stop recording
 				let track = globalStream.getTracks()[0];
 				track.stop();
-
 				input.disconnect(processor);
 				processor.disconnect(context.destination);
 				context.close().then(function () {
@@ -253,10 +241,8 @@
 					context = null;
 					AudioContext = null;
 				});
-
 			} else {
 				document.getElementById("mic-button").innerHTML = "<i style=\"padding: 15px 0;font-size:36px;\" class=\"material-icons\">mic</i>"
-
 				// start recording
 				AudioContext = window.AudioContext || window.webkitAudioContext;
 				context = new AudioContext({
@@ -265,33 +251,27 @@
 				processor = context.createScriptProcessor(bufferSize, 1, 1);
 				processor.connect(context.destination);
 				context.resume();
-
 				let handleSuccess = function (stream) {
 					globalStream = stream;
 					input = context.createMediaStreamSource(stream);
 					input.connect(processor);
-
 					processor.onaudioprocess = function (e) {
 						microphoneProcess(e);
 					};
 				};
-
 				navigator.mediaDevices.getUserMedia({
 					audio: true,
 					video: false
 				})
 					.then(handleSuccess);
-
 			}
 			mic = !mic;
 		}
-
 		function microphoneProcess(e) {
 			let left = e.inputBuffer.getChannelData(0);
 			let left16 = downsampleBuffer(left, 44100, 16000);
 			socket.send(left16);
 		}
-
 		let downsampleBuffer = function (buffer, sampleRate, outSampleRate) {
 			if (outSampleRate == sampleRate) {
 				return buffer;
@@ -311,43 +291,32 @@
 					accum += buffer[i];
 					count++;
 				}
-
 				result[offsetResult] = Math.min(1, accum / count) * 0x7FFF;
 				offsetResult++;
 				offsetBuffer = nextOffsetBuffer;
 			}
 			return result.buffer;
 		};
-
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 		function httpGet(theUrl) {
 			var xmlHttp = new XMLHttpRequest();
 			xmlHttp.open("GET", theUrl, false); // false for synchronous request
 			xmlHttp.send(null);
 			return xmlHttp.responseText;
 		}
-
 		var time = 0;
 		var time2 = 0;
 		var interval = setInterval(function() {
 			  time+=2;
 			  //console.log(time);
 			  document.getElementById("meeting-summary").innerHTML = httpGet('/live-summary')
-
 		}, 500);
-
 		var interval = setInterval(function() {
 			  time2+=2;
 			  //console.log(time2);
 			  document.getElementById("meeting-set").innerHTML = httpGet('/live-chat')
 			let elem = document.getElementById('meeting-set');
 			elem.scrollTop = elem.scrollHeight;
-
 		}, 500);
-
-
 	</script>
 </html>
-
-
