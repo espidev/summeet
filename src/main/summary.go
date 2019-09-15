@@ -15,6 +15,14 @@ type sentenceEntry struct {
 
 func getSummary (text string) string {
 
+
+	text = strings.ReplaceAll(text, " and", "");
+	text = strings.ReplaceAll(text, " the", "");
+	text = strings.ReplaceAll(text, " a", "");
+	text = strings.ReplaceAll(text, " was", "");
+	return text
+
+/*
 	tokenizer, err := english.NewSentenceTokenizer(nil)
 	if err != nil {
 		panic(err)
@@ -58,14 +66,14 @@ func getSummary (text string) string {
 		})
 	}
 
-	sort.Slice(lines, func(i, j int) bool {
-		return lines[i].weight < lines[i].weight
-	})
+//	sort.Slice(lines, func(i, j int) bool {
+//		return lines[i].weight < lines[i].weight
+//	})
 
 	finalS := ""
 	for _, v := range lines {
 		finalS += v.s + "\n"
 	}
 
-	return finalS
+	return finalS */
 }

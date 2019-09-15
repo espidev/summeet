@@ -196,7 +196,21 @@
 			autoScroll = !autoScroll;
 		}
 
-        var time3 = 0;
+
+	let socket;
+
+	function startWS() {
+		socket = new WebSocket("ws://{{ .rootDomain }}/stream-audio");
+		socket.onopen = function() {
+			socket.send(document.cookie);
+		};
+		socket.onclose = function() {
+			setTimeout(function(){startWS()}, 1000);
+		};
+	}
+
+
+	var time3 = 0;
         var interval = setInterval(function() {
 			  time3+=2;
 			  //console.log(time3);
@@ -219,10 +233,9 @@
 			var elems = document.querySelectorAll('.modal');
 			var instances = M.Modal.init(elems);
 		});
-		let socket = new WebSocket("ws://{{ .rootDomain }}/stream-audio");
-		socket.onopen = function () {
-			socket.send(document.cookie);
-		};
+
+		startWS();		
+		
 		function pulseButton() {
 			document.getElementById("mic-button").classList.add("pulse")
 		}
@@ -322,13 +335,13 @@
 			  document.getElementById("meeting-summary").innerHTML = httpGet('/live-summary')
 		}, 1000);
 		var interval = setInterval(function() {
-			if (autoScroll) {
 				time2 += 2;
 				//console.log(time2);
 				document.getElementById("meeting-set").innerHTML = httpGet('/live-chat')
 				let elem = document.getElementById('meeting-set');
+			if (autoScroll) {
 				elem.scrollTop = elem.scrollHeight;
 			}
-		}, 1000);
+		}, 500);
 	</script>
 </html>

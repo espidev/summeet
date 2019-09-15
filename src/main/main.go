@@ -68,7 +68,7 @@ func main() {
 
 	router.GET("/session", func (c *gin.Context) {
 		c.HTML(http.StatusOK, "session.html", gin.H{
-			"rootDomain": "localhost:3000",
+			"rootDomain": "summeet.online",
 		})
 	})
 
