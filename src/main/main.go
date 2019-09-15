@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"strconv"
 	"strings"
 	"time"
 
@@ -79,7 +80,10 @@ func main() {
 	})
 
 	router.GET("/time", func(c *gin.Context) {
-		c.String(http.StatusOK, fmt.Sprintf("%s", time.Since(start)))
+		seconds := int(time.Since(start).Seconds())
+		minutes := int(seconds / 60)
+		seconds = int(seconds % 60)
+		c.String(http.StatusOK, strconv.Itoa(minutes) + ":" + strconv.Itoa(seconds))
 	})
 
 	srv := &http.Server {
