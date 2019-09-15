@@ -22,7 +22,7 @@ func getSummary (text string) string {
 	text = strings.ReplaceAll(text, " was", "");
 	return text
 
-/*
+
 	tokenizer, err := english.NewSentenceTokenizer(nil)
 	if err != nil {
 		panic(err)
@@ -75,5 +75,5 @@ func getSummary (text string) string {
 		finalS += v.s + "\n"
 	}
 
-	return finalS */
+	return finalS 
 }
