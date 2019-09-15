@@ -199,6 +199,7 @@
 			var doc = new jsPDF('p','mm','a4');
 			var text = doc.splitTextToSize(document.getElementById('meeting-summary').textContent, (pdfInMM-lMargin-rMargin));
 			doc.setFont("helvetica");
+			doc.setFontSize(9);
 			doc.text(text, 15, 15);
 			var doc_name = "meeting-summary.pdf";
 			doc.save(doc_name);
