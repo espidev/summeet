@@ -330,10 +330,19 @@ func newAudioReceive(w http.ResponseWriter, hr *http.Request) {
 
 		image := "https://previews.123rf.com/images/punphoto/punphoto1211/punphoto121100083/16291629-colorful-abstract-water-color-art-hand-paint-background.jpg"
 
+		if user == "Rohan" {
+			image = "https://media.licdn.com/dms/image/C4E03AQGkhEWibv1y3g/profile-displayphoto-shrink_200_200/0?e=1574294400&v=beta&t=X6UebBepKK8bWMys_1BjFbmsqCdj9CORphR6FPo38Vk"
+		} else if user == "Raymond" {
+			image = "https://media.licdn.com/dms/image/C4D03AQF0BYrFkX1JIg/profile-displayphoto-shrink_200_200/0?e=1574294400&v=beta&t=izhL8vnWDdLQYeQ6yWkAFu0nqa-0kQyW8CLV3oF_BMk"
+		} else if user == "Nick" {
+			image = "https://media.licdn.com/dms/image/C5603AQGJpYaNEa0l-A/profile-displayphoto-shrink_200_200/0?e=1574294400&v=beta&t=-pWctaTTVlSjBCYsAPU5_3fS_mpfWN1jjyHFXCyr9PA"
+		} else if user == "Devin" {
+			image = "https://scontent.fyyz1-2.fna.fbcdn.net/v/t1.0-1/p160x160/65608370_1323260984498761_5942930897262084096_n.jpg?_nc_cat=110&_nc_oc=AQmiZofMeVOOnWkZpZAMWE2jXATJbQ_C5D97dZmnP2wFxsHpBYtyToiKH9k8lCOOKC8&_nc_ht=scontent.fyyz1-2.fna&oh=1853bed21e320be990190a74b53f38bd&oe=5DF91763"
+		}
+
 		// append things
 		rawText += " " + transcript + "."
 		liveChatHtml += `
-
 				<div class="card gradient-shadow gradient-45deg-reverse z-depth-1">
                         <div class="row nunito valign-wrapper">
                             <div class="col s1"></div>
@@ -350,8 +359,7 @@ func newAudioReceive(w http.ResponseWriter, hr *http.Request) {
                             </div>
                         </div>
                     </div>
-
-`
+		`
 		liveSummaryHtml = getSummary(rawText)
 	}
 }
